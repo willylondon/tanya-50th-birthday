@@ -896,19 +896,13 @@ footer {
         <button class="rsvp-btn" data-choice="decline" onclick="showRsvpForm('decline')"><span>🥀&ensp;Will Not Attend</span></button>
       </div>
 
-      <iframe name="rsvp_iframe" style="display:none;"></iframe>
-      <form class="rsvp-form" id="rsvpForm" onsubmit="submitRsvp(event)" action="https://formsubmit.co/willardwells@gmail.com" method="POST" target="rsvp_iframe">
-        <input type="hidden" name="_subject" value="🥂 New RSVP for Tanya's 50th Birthday!">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="Response" id="rsvpResponseField" value="">
-
+      <form class="rsvp-form" id="rsvpForm" onsubmit="submitRsvp(event)">
         <label for="rsvpName">Your Name</label>
-        <input type="text" id="rsvpName" name="Name" placeholder="Full name" required>
+        <input type="text" id="rsvpName" placeholder="Full name" required>
 
         <div id="attendFields">
           <label for="guestCount" style="display:block; margin-bottom:4px; margin-top:14px;">Number of Guests</label>
-          <select id="guestCount" name="Guests">
+          <select id="guestCount">
             <option value="1">1 Guest</option>
             <option value="2">2 Guests</option>
             <option value="3">3 Guests</option>
@@ -916,11 +910,11 @@ footer {
           </select>
 
           <label for="dietary" style="display:block; margin-bottom:4px; margin-top:14px;">Dietary Requirements</label>
-          <input type="text" id="dietary" name="Dietary" placeholder="Any dietary needs?">
+          <input type="text" id="dietary" placeholder="Any dietary needs?">
         </div>
 
         <label for="rsvpMsg" style="margin-top:14px;">Personal Message (optional)</label>
-        <textarea id="rsvpMsg" name="Message" placeholder="A few words for Tanya…"></textarea>
+        <textarea id="rsvpMsg" placeholder="A few words for Tanya…"></textarea>
         <button type="submit" class="rsvp-submit" id="rsvpSubmitBtn">Confirm RSVP</button>
       </form>
 
@@ -1096,7 +1090,22 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 
-/* ── RSVP ── */
+/* ── GOOGLE SHEETS RSVP ── */
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyuhy3tQAsaXTzAOhYtPs0wDZTngauCDkRhfb_A8MUKqTHNRSLlczL6R5iyj1oH8Xx4/exec';
+
+async function postToSheet(payload) {
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.log('Sheet error (non-blocking):', err);
+  }
+}
+
 let rsvpType = null;
 function showRsvpForm(choice) {
   rsvpType = choice;
@@ -1106,15 +1115,24 @@ function showRsvpForm(choice) {
   document.getElementById('rsvpChoice').style.display = 'none';
 }
 function submitRsvp(e) {
-  // Set the hidden response field before the native form submit
-  document.getElementById('rsvpResponseField').value = rsvpType === 'accept' ? '✅ Attending' : '❌ Declined';
+  e.preventDefault();
+  const name = document.getElementById('rsvpName').value.trim();
+  const guests = document.getElementById('guestCount').value;
+  const dietary = document.getElementById('dietary').value.trim();
+  const message = document.getElementById('rsvpMsg').value.trim();
 
-  // Show confirmation UI (the form submits natively to the hidden iframe)
-  setTimeout(() => {
-    document.getElementById('rsvpForm').style.display = 'none';
-    document.getElementById('rsvpConfirmed').style.display = 'block';
-    if (rsvpType === 'accept') fireConfetti();
-  }, 300);
+  postToSheet({
+    type: 'rsvp',
+    name: name,
+    response: rsvpType === 'accept' ? 'Attending' : 'Declined',
+    guests: rsvpType === 'accept' ? guests : '0',
+    dietary: dietary,
+    message: message
+  });
+
+  document.getElementById('rsvpForm').style.display = 'none';
+  document.getElementById('rsvpConfirmed').style.display = 'block';
+  if (rsvpType === 'accept') fireConfetti();
 }
 
 
@@ -1190,6 +1208,7 @@ function addWish(e) {
   if (!name || !text) return;
   wishes.unshift({ name, text });
   renderWishes();
+  postToSheet({ type: 'wish', name: name, wish: text });
   document.getElementById('guestbookForm').reset();
 }
 function renderWishes() {
