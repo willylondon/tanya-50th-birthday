@@ -1,0 +1,441 @@
+:root {
+    --gold: #D4AF37;
+    --gold-light: #F9E27D;
+    --gold-dark: #A67C00;
+    --black: #0a0a0a;
+    --black-soft: #1a1a1a;
+    --cream: #fdfaf5;
+    --white: #ffffff;
+    --table: #f0ede9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--table);
+    overflow-x: hidden;
+}
+
+.tabletop {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: radial-gradient(circle, #fcfcfc 0%, #e0ddd8 100%);
+    background-image: url('black_gold_glitter_background.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Envelope Styles */
+.envelope-wrapper {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    cursor: pointer;
+    perspective: 1000px;
+    margin-bottom: 300px; /* Space for card to slide out */
+    transition: transform 0.3s ease;
+}
+
+.envelope-wrapper:hover {
+    transform: translateY(-5px);
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--black-soft);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.front {
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 3;
+    border-right: 200px solid transparent;
+    border-left: 200px solid transparent;
+    border-bottom: 150px solid var(--black-soft);
+    bottom: 0;
+}
+
+.front::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-right: 200px solid var(--black);
+    border-left: 200px solid var(--black);
+    border-top: 150px solid transparent;
+    left: -200px;
+    top: -150px;
+}
+
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--black);
+    z-index: 1;
+}
+
+.flap {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-right: 200px solid transparent;
+    border-left: 200px solid transparent;
+    border-top: 150px solid #222; /* Slightly lighter black for flap */
+    top: 0;
+    z-index: 4;
+    transform-origin: top;
+    transition: transform 0.6s ease;
+}
+
+.flap::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-top: 5px solid var(--gold);
+    left: -200px;
+    top: -150px;
+}
+
+/* Card Styles */
+.card {
+    position: absolute;
+    width: 380px;
+    height: 550px;
+    background-color: var(--black);
+    left: 10px;
+    bottom: 0;
+    z-index: 2;
+    transition: transform 0.8s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.card-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    color: var(--gold);
+    text-align: center;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Glitter Effect */
+.card-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 160px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, var(--gold), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 160px 120px, var(--gold), rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.3;
+    animation: glitter 10s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes glitter {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-200px); }
+}
+
+.queen-piece {
+    width: 80px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+}
+
+.gold-frame {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid var(--gold);
+    pointer-events: none;
+}
+
+.gold-frame::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px solid var(--gold-dark);
+}
+
+.card-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.pre-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #f9e27d 20%, #d4af37 40%, #a67c00 70%, #f9e27d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.main-title span {
+    font-size: 5rem;
+    display: block;
+    margin: 10px 0;
+    background: linear-gradient(to bottom, #ffffff 10%, #f9e27d 40%, #d4af37 60%, #a67c00 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+}
+
+.honore-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: var(--white);
+}
+
+.gold-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 20px 0;
+}
+
+.event-details {
+    margin: 20px 0;
+}
+
+.detail {
+    margin-bottom: 15px;
+}
+
+.label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    margin-bottom: 4px;
+}
+
+.value {
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 500;
+}
+
+.theme .value {
+    font-size: 1.2rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.note {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #888;
+    margin-top: 30px;
+    line-height: 1.5;
+}
+
+/* Animations State */
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope.open .card {
+    transform: translateY(-450px);
+}
+
+.instruction {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: #999;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* RSVP Section */
+.rsvp-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 50px;
+}
+
+.rsvp-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.rsvp-container {
+    background: var(--white);
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
+
+.rsvp-container h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--black);
+}
+
+.rsvp-container p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.rsvp-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.btn {
+    padding: 15px 30px;
+    border: 1px solid var(--black);
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.btn.attend {
+    background: var(--black);
+    color: var(--white);
+}
+
+.btn.attend:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.btn.decline:hover {
+    background: #f5f5f5;
+}
+
+.tribute {
+    border-top: 1px solid #eee;
+    padding-top: 40px;
+}
+
+.tribute h3 {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    color: var(--gold-dark);
+}
+
+.tribute p {
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 500px) {
+    .envelope-wrapper {
+        width: 320px;
+        height: 240px;
+    }
+    
+    .front {
+        border-right-width: 160px;
+        border-left-width: 160px;
+        border-bottom-width: 120px;
+    }
+    
+    .front::after {
+        border-right-width: 160px;
+        border-left-width: 160px;
+        left: -160px;
+        top: -120px;
+    }
+    
+    .flap {
+        border-right-width: 160px;
+        border-left-width: 160px;
+        border-top-width: 120px;
+    }
+    
+    .flap::after {
+        left: -160px;
+        top: -120px;
+    }
+    
+    .card {
+        width: 300px;
+        height: 480px;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .main-title span {
+        font-size: 3rem;
+    }
+}

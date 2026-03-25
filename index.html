@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanya Barclay-Reid — 50th Birthday Celebration</title>
+<meta name="description" content="You are cordially invited to a surprise 50th birthday celebration in honour of Tanya Barclay-Reid. April 28, 2026 at Medallion Hall Hotel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════ */
+:root {
+  --gold: #C9A84C;
+  --gold-light: #F0D080;
+  --gold-bright: #FFE566;
+  --gold-dark: #8B7332;
+  --black: #050505;
+  --black-soft: #0e0e0e;
+  --black-card: #111111;
+  --cream: #FAF6EE;
+  --cream-dim: #c5b89a;
+  --white: #ffffff;
+  --font-display: 'Cinzel', serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-body: 'Cormorant Garamond', serif;
+  --font-sans: 'Lato', sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   RESET & GLOBALS
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; cursor: none; }
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--cream);
+  overflow-x: hidden;
+  cursor: none;
+}
+a { color: var(--gold); text-decoration: none; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+   ═══════════════════════════════════════════ */
+.cursor-dot {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold-bright);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+  opacity: 0.6;
+}
+@media (max-width: 768px) {
+  html, body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   PARTICLE CANVAS
+   ═══════════════════════════════════════════ */
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   ENVELOPE INTRO
+   ═══════════════════════════════════════════ */
+#envelope-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  cursor: pointer;
+}
+.envelope-scene {
+  perspective: 1200px;
+  width: 340px; height: 220px;
+  position: relative;
+}
+.env-back {
+  position: absolute; width: 100%; height: 100%;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  z-index: 1;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.env-back::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 2px;
+}
+.env-flap {
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 0;
+  border-left: 170px solid transparent;
+  border-right: 170px solid transparent;
+  border-top: 130px solid #181818;
+  z-index: 4;
+  transform-origin: top center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.env-flap::after {
+  content: '';
+  position: absolute;
+  top: -130px; left: -170px;
+  border-left: 170px solid transparent;
+  border-right: 170px solid transparent;
+  border-top: 3px solid var(--gold);
+}
+.env-front-left, .env-front-right {
+  position: absolute; bottom: 0;
+  width: 0; height: 0;
+  z-index: 3;
+}
+.env-front-left {
+  left: 0;
+  border-left: 170px solid #141414;
+  border-top: 110px solid transparent;
+  border-bottom: 110px solid transparent;
+}
+.env-front-right {
+  right: 0;
+  border-right: 170px solid #141414;
+  border-top: 110px solid transparent;
+  border-bottom: 110px solid transparent;
+}
+.env-front-bottom {
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 0;
+  border-left: 170px solid transparent;
+  border-right: 170px solid transparent;
+  border-bottom: 130px solid #121212;
+  z-index: 5;
+}
+.env-card {
+  position: absolute;
+  width: 310px; height: 200px;
+  left: 15px; top: 10px;
+  background: linear-gradient(135deg, #1c1c1c 0%, #0a0a0a 100%);
+  border: 1px solid var(--gold);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.env-card-text {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.8;
+}
+.env-card-text span { display: block; font-size: 2rem; margin: 8px 0; color: var(--gold-light); }
+
+.env-seal {
+  position: absolute;
+  width: 50px; height: 50px;
+  bottom: -25px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, var(--gold) 0%, var(--gold-dark) 100%);
+  border-radius: 50%;
+  z-index: 6;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--black);
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(201,168,76,0.4);
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.env-instruction {
+  margin-top: 45px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  animation: envPulse 2.5s ease-in-out infinite;
+}
+@keyframes envPulse {
+  0%,100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Envelope open state */
+.envelope-scene.open .env-flap { transform: rotateX(180deg); z-index: 0; }
+.envelope-scene.open .env-card { transform: translateY(-260px) scale(1.05); }
+.envelope-scene.open .env-seal { transform: translateX(-50%) scale(0); opacity: 0; }
+
+#envelope-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN SITE (hidden until envelope opens)
+   ═══════════════════════════════════════════ */
+#main-site {
+  opacity: 0;
+  transition: opacity 1.5s ease 0.5s;
+  position: relative;
+  z-index: 1;
+}
+#main-site.visible { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   SECTION UTILITIES
+   ═══════════════════════════════════════════ */
+section {
+  min-height: 60vh;
+  padding: 100px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.fade-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.fade-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   ORNAMENTAL ELEMENTS
+   ═══════════════════════════════════════════ */
+.ornament {
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin: 30px 0 20px;
+  letter-spacing: 12px;
+  opacity: 0.6;
+}
+.gold-rule {
+  width: 220px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 24px auto;
+}
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--gold-light);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════
+   HERO / INVITATION CARD
+   ═══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  justify-content: center;
+  padding: 60px 16px;
+}
+.invitation-card {
+  position: relative;
+  max-width: 520px;
+  width: 100%;
+  background: linear-gradient(160deg, #141414 0%, #090909 50%, #111 100%);
+  border: 1px solid var(--gold);
+  padding: 60px 40px;
+  box-shadow: 0 0 80px rgba(201,168,76,0.08), inset 0 0 80px rgba(0,0,0,0.5);
+}
+/* ornate corners */
+.invitation-card::before,
+.invitation-card::after {
+  content: '❧';
+  position: absolute;
+  font-size: 1.6rem;
+  color: var(--gold);
+  opacity: 0.5;
+}
+.invitation-card::before { top: 14px; left: 18px; }
+.invitation-card::after { bottom: 14px; right: 18px; transform: rotate(180deg); }
+.corner-tr, .corner-bl {
+  position: absolute;
+  font-size: 1.6rem;
+  color: var(--gold);
+  opacity: 0.5;
+}
+.corner-tr { top: 14px; right: 18px; transform: scaleX(-1); }
+.corner-bl { bottom: 14px; left: 18px; transform: scaleX(-1) rotate(180deg); }
+
+.card-inner-border {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201,168,76,0.2);
+  pointer-events: none;
+}
+
+.invite-pretitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--cream-dim);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.invite-surprise {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  letter-spacing: 8px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.invite-fifty {
+  font-family: var(--font-serif);
+  font-size: clamp(5rem, 14vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  background: linear-gradient(180deg, #fff 0%, #F0D080 30%, #C9A84C 60%, #8B7332 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 10px 0 5px;
+}
+.invite-sub {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 5px;
+}
+.invite-honouree {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--white);
+  margin: 15px 0;
+  font-style: italic;
+}
+.invite-details {
+  margin-top: 20px;
+}
+.invite-detail {
+  margin-bottom: 18px;
+}
+.invite-detail .lbl {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 4px;
+}
+.invite-detail .val {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  color: var(--cream);
+  font-weight: 400;
+}
+.invite-theme-val {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  font-size: 1.3rem !important;
+  letter-spacing: 3px;
+}
+.invite-gift {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--cream-dim);
+  margin-top: 24px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   EVENING PROGRAMME
+   ═══════════════════════════════════════════ */
+.programme-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 30px;
+  max-width: 420px;
+  width: 100%;
+}
+.prog-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+.prog-item:last-child { border-bottom: none; }
+.prog-icon {
+  font-size: 1.4rem;
+  min-width: 36px;
+  text-align: center;
+}
+.prog-time {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--gold-dark);
+  min-width: 70px;
+  text-transform: uppercase;
+}
+.prog-label {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--cream);
+  text-align: left;
+}
+
+/* ═══════════════════════════════════════════
+   COUNTDOWN
+   ═══════════════════════════════════════════ */
+#countdown { padding-top: 60px; padding-bottom: 60px; }
+.countdown-grid {
+  display: flex;
+  gap: 24px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+}
+.cd-num {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.cd-label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-top: 8px;
+}
+
+/* ═══════════════════════════════════════════
+   TRIBUTE
+   ═══════════════════════════════════════════ */
+#tribute { max-width: 720px; margin: 0 auto; }
+.tribute-text {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-style: italic;
+  line-height: 2;
+  color: var(--cream-dim);
+  max-width: 640px;
+}
+.tribute-text strong {
+  color: var(--gold-light);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* ═══════════════════════════════════════════
+   RSVP
+   ═══════════════════════════════════════════ */
+.rsvp-choice {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.rsvp-btn {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.rsvp-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+.rsvp-btn:hover::before { transform: scaleX(1); }
+.rsvp-btn:hover { color: var(--black); }
+.rsvp-btn span { position: relative; z-index: 1; }
+
+.rsvp-form {
+  display: none;
+  max-width: 420px;
+  width: 100%;
+  margin-top: 20px;
+  gap: 16px;
+  flex-direction: column;
+}
+.rsvp-form.show { display: flex; }
+.rsvp-form label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  text-align: left;
+}
+.rsvp-form input, .rsvp-form select, .rsvp-form textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.3s;
+}
+.rsvp-form input:focus, .rsvp-form select:focus, .rsvp-form textarea:focus {
+  border-color: var(--gold);
+}
+.rsvp-form textarea { resize: vertical; min-height: 80px; }
+.rsvp-submit {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.3s;
+}
+.rsvp-submit:hover { background: var(--gold-light); }
+
+.rsvp-confirmed {
+  display: none;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-top: 20px;
+}
+
+/* Confetti canvas */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 8000;
+}
+
+/* ═══════════════════════════════════════════
+   GUEST BOOK
+   ═══════════════════════════════════════════ */
+.guestbook-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 420px;
+  width: 100%;
+  margin-top: 24px;
+}
+.guestbook-form input, .guestbook-form textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.3s;
+}
+.guestbook-form input:focus, .guestbook-form textarea:focus { border-color: var(--gold); }
+.guestbook-form textarea { resize: vertical; min-height: 80px; }
+.guestbook-submit {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 14px;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.guestbook-submit:hover { background: var(--gold); color: var(--black); }
+
+.wishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 780px;
+  width: 100%;
+  margin-top: 40px;
+}
+.wish-card {
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 28px 24px;
+  text-align: left;
+  animation: wishIn 0.5s ease;
+}
+@keyframes wishIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.wish-card .wish-text {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--cream-dim);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.wish-card .wish-author {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* AI Wish Generator */
+.ai-wish-btn {
+  margin-top: 14px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--gold-dark);
+  border: 1px solid rgba(201,168,76,0.3);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.ai-wish-btn:hover { border-color: var(--gold); color: var(--gold); }
+.ai-wish-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+footer {
+  text-align: center;
+  padding: 60px 24px 40px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .envelope-scene { width: 290px; height: 190px; }
+  .env-flap { border-left-width: 145px; border-right-width: 145px; border-top-width: 110px; }
+  .env-flap::after { top: -110px; left: -145px; border-left-width: 145px; border-right-width: 145px; }
+  .env-front-left { border-left-width: 145px; border-top-width: 95px; border-bottom-width: 95px; }
+  .env-front-right { border-right-width: 145px; border-top-width: 95px; border-bottom-width: 95px; }
+  .env-front-bottom { border-left-width: 145px; border-right-width: 145px; border-bottom-width: 110px; }
+  .env-card { width: 260px; height: 170px; }
+  .invitation-card { padding: 40px 24px; }
+  section { padding: 70px 16px; }
+  .rsvp-btn { padding: 14px 24px; font-size: 0.75rem; }
+  .countdown-grid { gap: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particles"></canvas>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ═══════════════════════════════════════════
+     ENVELOPE OVERLAY
+     ═══════════════════════════════════════════ -->
+<div id="envelope-overlay">
+  <div class="envelope-scene" id="envelopeScene">
+    <div class="env-back"></div>
+    <div class="env-card">
+      <div class="env-card-text">
+        You Are Invited<br>
+        <span>5 0</span>
+        Tanya Barclay-Reid
+      </div>
+    </div>
+    <div class="env-flap"></div>
+    <div class="env-front-left"></div>
+    <div class="env-front-right"></div>
+    <div class="env-front-bottom"></div>
+    <div class="env-seal">TB</div>
+  </div>
+  <div class="env-instruction" id="envInstruction">Tap to Open</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN SITE
+     ═══════════════════════════════════════════ -->
+<div id="main-site">
+
+  <!-- HERO – INVITATION CARD -->
+  <section id="hero">
+    <div class="invitation-card fade-section">
+      <div class="card-inner-border"></div>
+      <span class="corner-tr">❧</span>
+      <span class="corner-bl">❧</span>
+
+      <p class="invite-pretitle">You are cordially invited to a</p>
+      <p class="invite-surprise">Surprise</p>
+      <div class="invite-fifty">50</div>
+      <p class="invite-sub">Birthday Celebration</p>
+      <p class="invite-pretitle">in honour of</p>
+      <h1 class="invite-honouree">Tanya Barclay-Reid</h1>
+
+      <div class="gold-rule"></div>
+
+      <div class="invite-details">
+        <div class="invite-detail">
+          <span class="lbl">📅&ensp;Date</span>
+          <span class="val">Tuesday, April 28, 2026</span>
+        </div>
+        <div class="invite-detail">
+          <span class="lbl">🕕&ensp;Time</span>
+          <span class="val">6 : 00 PM</span>
+        </div>
+        <div class="invite-detail">
+          <span class="lbl">📍&ensp;Venue</span>
+          <span class="val">Medallion Hall Hotel</span>
+        </div>
+        <div class="invite-detail">
+          <span class="lbl">✨&ensp;Theme</span>
+          <span class="val invite-theme-val">Black & Gold</span>
+        </div>
+      </div>
+
+      <div class="gold-rule"></div>
+      <p class="invite-gift">Each guest is kindly asked to bring a gift<br>as we celebrate this special milestone.</p>
+    </div>
+  </section>
+
+  <!-- EVENING PROGRAMME -->
+  <section id="programme">
+    <div class="fade-section">
+      <p class="section-label">The Evening</p>
+      <h2 class="section-title">Programme</h2>
+      <div class="gold-rule"></div>
+      <div class="programme-timeline">
+        <div class="prog-item">
+          <span class="prog-icon">🥂</span>
+          <span class="prog-time">6 : 00 PM</span>
+          <span class="prog-label">Cocktail Hour & Arrivals</span>
+        </div>
+        <div class="prog-item">
+          <span class="prog-icon">🎉</span>
+          <span class="prog-time">7 : 00 PM</span>
+          <span class="prog-label">The Grand Surprise Reveal</span>
+        </div>
+        <div class="prog-item">
+          <span class="prog-icon">🍽️</span>
+          <span class="prog-time">7 : 30 PM</span>
+          <span class="prog-label">Dinner & Toasts</span>
+        </div>
+        <div class="prog-item">
+          <span class="prog-icon">🎂</span>
+          <span class="prog-time">9 : 00 PM</span>
+          <span class="prog-label">Birthday Cake & Wishes</span>
+        </div>
+        <div class="prog-item">
+          <span class="prog-icon">💃</span>
+          <span class="prog-time">9 : 30 PM</span>
+          <span class="prog-label">Dancing & Celebration</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section id="countdown">
+    <div class="fade-section">
+      <p class="section-label">The Moment Arrives In</p>
+      <h2 class="section-title">Countdown</h2>
+      <div class="gold-rule"></div>
+      <div class="countdown-grid">
+        <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Hours</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">Minutes</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">Seconds</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRIBUTE -->
+  <section id="tribute">
+    <div class="fade-section">
+      <p class="section-label">A Tribute To</p>
+      <h2 class="section-title">The Queen</h2>
+      <div class="ornament">♛</div>
+      <div class="gold-rule"></div>
+      <p class="tribute-text">
+        A remarkable woman who has navigated life with strength, grace, and unwavering determination. Her loyalty and love are undeniable, though at times misunderstood by some. She is hardworking and deeply God-fearing, a true woman of faith who walks closely with the Father. Though her journey has not always been smooth, her faith remains unshaken, firmly anchored in God's promises.
+      </p>
+      <div class="gold-rule" style="margin:30px auto;"></div>
+      <p class="tribute-text">
+        She is a devoted mother who would do anything for her daughter, <strong>Abigail Reid</strong> — her heartbeat, her motivation, and the reason she perseveres through every challenge. As a wife, she is loyal and loving, standing firmly beside her husband with a full and faithful heart.
+      </p>
+      <div class="gold-rule" style="margin:30px auto;"></div>
+      <p class="tribute-text">
+        She is a <strong>queen</strong> in every sense of the word, embodying strength, dignity, and resilience. As she celebrates her 50th birthday, she does so with a heart full of gratitude and thanksgiving — standing tall, adjusting her crown, and embracing the beauty of her journey.
+      </p>
+      <div class="ornament">♛</div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp">
+    <div class="fade-section">
+      <p class="section-label">Kindly Respond</p>
+      <h2 class="section-title">RSVP</h2>
+      <div class="gold-rule"></div>
+      <p style="color:var(--cream-dim); font-size:1rem; margin-bottom:10px; font-style:italic;">Please confirm your attendance by April 14, 2026.</p>
+
+      <div class="rsvp-choice" id="rsvpChoice">
+        <button class="rsvp-btn" data-choice="accept" onclick="showRsvpForm('accept')"><span>🥂&ensp;Will Attend</span></button>
+        <button class="rsvp-btn" data-choice="decline" onclick="showRsvpForm('decline')"><span>🥀&ensp;Will Not Attend</span></button>
+      </div>
+
+      <form class="rsvp-form" id="rsvpForm" onsubmit="submitRsvp(event)">
+        <label for="rsvpName">Your Name</label>
+        <input type="text" id="rsvpName" placeholder="Full name" required>
+
+        <div id="attendFields">
+          <label for="guestCount" style="display:block; margin-bottom:4px; margin-top:14px;">Number of Guests</label>
+          <select id="guestCount">
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+
+          <label for="dietary" style="display:block; margin-bottom:4px; margin-top:14px;">Dietary Requirements</label>
+          <input type="text" id="dietary" placeholder="Any dietary needs?">
+        </div>
+
+        <label for="rsvpMsg" style="margin-top:14px;">Personal Message (optional)</label>
+        <textarea id="rsvpMsg" placeholder="A few words for Tanya…"></textarea>
+        <button type="submit" class="rsvp-submit" id="rsvpSubmitBtn">Confirm RSVP</button>
+      </form>
+
+      <div class="rsvp-confirmed" id="rsvpConfirmed">
+        <p>✨ Thank you! Your response has been received.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUEST BOOK -->
+  <section id="guestbook">
+    <div class="fade-section">
+      <p class="section-label">Leave Your Mark</p>
+      <h2 class="section-title">Birthday Wishes</h2>
+      <div class="gold-rule"></div>
+
+      <form class="guestbook-form" id="guestbookForm" onsubmit="addWish(event)">
+        <input type="text" id="wishName" placeholder="Your name" required>
+        <textarea id="wishText" placeholder="Write your birthday wish for Tanya…" required></textarea>
+        <button type="submit" class="guestbook-submit">✦&ensp;Post Wish</button>
+        <button type="button" class="ai-wish-btn" id="aiWishBtn" onclick="generateAIWish()">✨ Generate AI Wish</button>
+      </form>
+
+      <div class="wishes-grid" id="wishesGrid"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="gold-rule" style="margin-bottom:30px;"></div>
+    <p>Celebrating 50 Years of Grace&ensp;·&ensp;April 28, 2026</p>
+    <p style="margin-top:10px; opacity:0.5;">Made with love</p>
+  </footer>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════ -->
+<script>
+/* ── CUSTOM CURSOR ── */
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX - 4 + 'px';
+  dot.style.top = mouseY - 4 + 'px';
+});
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.15;
+  ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = ringX - 20 + 'px';
+  ring.style.top = ringY - 20 + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.addEventListener('mousedown', () => { ring.style.width = '30px'; ring.style.height = '30px'; });
+document.addEventListener('mouseup', () => { ring.style.width = '40px'; ring.style.height = '40px'; });
+
+
+/* ── GOLD PARTICLE CANVAS ── */
+const pCanvas = document.getElementById('particles');
+const pCtx = pCanvas.getContext('2d');
+let particlesArray = [];
+
+function resizeParticles() {
+  pCanvas.width = window.innerWidth;
+  pCanvas.height = window.innerHeight;
+}
+resizeParticles();
+window.addEventListener('resize', resizeParticles);
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * pCanvas.width;
+    this.y = Math.random() * pCanvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedY = -(Math.random() * 0.4 + 0.1);
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.15;
+    this.gold = Math.random() > 0.5;
+  }
+  update() {
+    this.y += this.speedY;
+    this.x += this.speedX;
+    if (this.y < -10) { this.y = pCanvas.height + 10; this.x = Math.random() * pCanvas.width; }
+    this.opacity += (Math.random() - 0.5) * 0.01;
+    if (this.opacity < 0.1) this.opacity = 0.1;
+    if (this.opacity > 0.6) this.opacity = 0.6;
+  }
+  draw() {
+    pCtx.beginPath();
+    pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    const c = this.gold ? `rgba(201,168,76,${this.opacity})` : `rgba(255,229,102,${this.opacity * 0.6})`;
+    pCtx.fillStyle = c;
+    pCtx.fill();
+  }
+}
+
+function initParticles() {
+  const count = Math.min(120, Math.floor(window.innerWidth / 12));
+  for (let i = 0; i < count; i++) particlesArray.push(new Particle());
+}
+function animateParticles() {
+  pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+  particlesArray.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+initParticles();
+animateParticles();
+
+
+/* ── ENVELOPE REVEAL ── */
+const envOverlay = document.getElementById('envelope-overlay');
+const envScene = document.getElementById('envelopeScene');
+const envInstruction = document.getElementById('envInstruction');
+const mainSite = document.getElementById('main-site');
+let envOpened = false;
+
+envOverlay.addEventListener('click', () => {
+  if (envOpened) return;
+  envOpened = true;
+  envInstruction.style.display = 'none';
+  envScene.classList.add('open');
+
+  setTimeout(() => {
+    envOverlay.classList.add('fade-out');
+    mainSite.classList.add('visible');
+  }, 1600);
+
+  setTimeout(() => {
+    envOverlay.style.display = 'none';
+  }, 3000);
+});
+
+
+/* ── INTERSECTION OBSERVER (fade-in) ── */
+const fadeEls = document.querySelectorAll('.fade-section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.15 });
+fadeEls.forEach(el => observer.observe(el));
+
+
+/* ── COUNTDOWN ── */
+const targetDate = new Date('2026-04-28T18:00:00-05:00').getTime();
+function updateCountdown() {
+  const now = Date.now();
+  const diff = targetDate - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '🎉';
+    document.getElementById('cd-hours').textContent = '';
+    document.getElementById('cd-mins').textContent = '';
+    document.getElementById('cd-secs').textContent = '';
+    return;
+  }
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+  document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+/* ── GOOGLE SHEETS CONFIG ── */
+// REPLACE THIS URL with your deployed Google Apps Script Web App URL:
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+async function postToSheet(payload) {
+  if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_')) return;
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.log('Sheet post error (non-blocking):', err);
+  }
+}
+
+/* ── RSVP ── */
+let rsvpType = null;
+function showRsvpForm(choice) {
+  rsvpType = choice;
+  document.getElementById('rsvpForm').classList.add('show');
+  document.getElementById('attendFields').style.display = choice === 'accept' ? 'block' : 'none';
+  document.getElementById('rsvpSubmitBtn').textContent = choice === 'accept' ? 'Confirm Attendance' : 'Send Regrets';
+  document.getElementById('rsvpChoice').style.display = 'none';
+}
+function submitRsvp(e) {
+  e.preventDefault();
+  const name = document.getElementById('rsvpName').value.trim();
+  const guests = document.getElementById('guestCount').value;
+  const dietary = document.getElementById('dietary').value.trim();
+  const message = document.getElementById('rsvpMsg').value.trim();
+
+  // POST to Google Sheet
+  postToSheet({
+    type: 'rsvp',
+    name: name,
+    response: rsvpType === 'accept' ? 'Attending' : 'Declined',
+    guests: rsvpType === 'accept' ? guests : '0',
+    dietary: dietary,
+    message: message
+  });
+
+  document.getElementById('rsvpForm').style.display = 'none';
+  document.getElementById('rsvpConfirmed').style.display = 'block';
+  if (rsvpType === 'accept') fireConfetti();
+}
+
+
+/* ── CONFETTI ── */
+const confettiCanvas = document.getElementById('confetti-canvas');
+const confettiCtx = confettiCanvas.getContext('2d');
+let confettiPieces = [];
+let confettiRunning = false;
+
+function resizeConfetti() {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+resizeConfetti();
+window.addEventListener('resize', resizeConfetti);
+
+function fireConfetti() {
+  confettiPieces = [];
+  const colors = ['#C9A84C', '#F0D080', '#FFE566', '#ffffff', '#FFD700', '#DAA520'];
+  for (let i = 0; i < 250; i++) {
+    confettiPieces.push({
+      x: window.innerWidth / 2 + (Math.random() - 0.5) * 200,
+      y: window.innerHeight / 2,
+      vx: (Math.random() - 0.5) * 18,
+      vy: -(Math.random() * 16 + 4),
+      w: Math.random() * 10 + 4,
+      h: Math.random() * 6 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10,
+      gravity: 0.25 + Math.random() * 0.15,
+      opacity: 1
+    });
+  }
+  if (!confettiRunning) {
+    confettiRunning = true;
+    animateConfetti();
+  }
+}
+
+function animateConfetti() {
+  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  let alive = false;
+  confettiPieces.forEach(c => {
+    c.x += c.vx;
+    c.vy += c.gravity;
+    c.y += c.vy;
+    c.vx *= 0.99;
+    c.rotation += c.rotSpeed;
+    if (c.y > confettiCanvas.height + 50) { c.opacity -= 0.05; }
+    if (c.opacity > 0) {
+      alive = true;
+      confettiCtx.save();
+      confettiCtx.translate(c.x, c.y);
+      confettiCtx.rotate((c.rotation * Math.PI) / 180);
+      confettiCtx.globalAlpha = Math.max(0, c.opacity);
+      confettiCtx.fillStyle = c.color;
+      confettiCtx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+      confettiCtx.restore();
+    }
+  });
+  if (alive) requestAnimationFrame(animateConfetti);
+  else { confettiRunning = false; confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height); }
+}
+
+
+/* ── GUEST BOOK ── */
+const wishes = [];
+function addWish(e) {
+  e.preventDefault();
+  const name = document.getElementById('wishName').value.trim();
+  const text = document.getElementById('wishText').value.trim();
+  if (!name || !text) return;
+  wishes.unshift({ name, text });
+  renderWishes();
+
+  // POST wish to Google Sheet
+  postToSheet({ type: 'wish', name: name, wish: text });
+
+  document.getElementById('guestbookForm').reset();
+}
+function renderWishes() {
+  const grid = document.getElementById('wishesGrid');
+  grid.innerHTML = wishes.map(w =>
+    `<div class="wish-card"><p class="wish-text">"${w.text}"</p><p class="wish-author">— ${w.name}</p></div>`
+  ).join('');
+}
+
+
+/* ── AI WISH GENERATOR ── */
+async function generateAIWish() {
+  const btn = document.getElementById('aiWishBtn');
+  const textarea = document.getElementById('wishText');
+  btn.disabled = true;
+  btn.textContent = '✨ Writing…';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 200,
+        messages: [{
+          role: 'user',
+          content: 'Write an elegant, heartfelt, and personal 50th birthday wish for Tanya Barclay-Reid. She is a woman of faith, a devoted mother, a loyal wife, and a true queen. Keep it warm, poetic, and under 80 words. Do not include any preamble—return only the wish text.'
+        }]
+      })
+    });
+    const data = await res.json();
+    if (data.content && data.content[0]) {
+      textarea.value = data.content[0].text;
+    } else {
+      textarea.value = 'Happy 50th Birthday, Tanya! May this golden milestone be a crown upon a life beautifully lived. Your grace, faith, and love inspire everyone who knows you. Here\'s to 50 more years of joy, laughter, and answered prayers. 👑✨';
+    }
+  } catch {
+    // Fallback wish if API is unavailable
+    textarea.value = 'Happy 50th Birthday, Tanya! May this golden milestone be a crown upon a life beautifully lived. Your grace, faith, and love inspire everyone who knows you. Here\'s to 50 more years of joy, laughter, and answered prayers. 👑✨';
+  }
+  btn.disabled = false;
+  btn.textContent = '✨ Generate AI Wish';
+}
+
+// Pre-seed a wish
+wishes.push({ name: 'The Celebration Committee', text: 'To our beloved Tanya — 50 years of grace, strength, and unwavering faith. You are a queen in every sense. May this next chapter be your most beautiful yet. We love you! 👑' });
+renderWishes();
+</script>
+</body>
+</html>
